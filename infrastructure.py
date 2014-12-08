@@ -31,7 +31,8 @@ class Edge(object):
         self.mean_of_diffs = None
         self.stdev = None
         self.num_ratings = None
-        self.conf = None
+        self.confidence = None
+        self.cost = None
         self.same_item = same_item
 
     def update_conf(self):

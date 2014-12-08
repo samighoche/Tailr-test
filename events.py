@@ -1,6 +1,6 @@
 import infrastructure
 import global_vars
-from UCS import bidirectional_uniform_cost_search
+from dijkstra import bidirectional_uniform_cost_search
 from PS import perimeter_search
 from LS import beam_search
 
