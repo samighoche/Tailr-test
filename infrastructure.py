@@ -1,6 +1,8 @@
 import math
 import global_vars
 
+global num_edges
+
 class Node(object):
     def __init__(self, size, brand=None, name=None):
         global current_item_id
@@ -47,6 +49,7 @@ class Graph(object):
         self.edge_lst = {}
         self.neighbors_lst = {}
         self.edge_matrix = {}
+        self.brand_matrix = {}
 
     def is_new_item(self, node):
         return not (node in neighbors_lst)
@@ -55,6 +58,8 @@ class Graph(object):
         self.edge_lst[node] = []
         self.neighbors_lst[node] = []
         self.edge_matrix[node] = {}
+        if node.brand not in self.brand_matrix:
+            self.brand_matrix[node.brand] = {}
  
     def get_edges(self, v):
         return self.edge_lst[v]
@@ -81,6 +86,14 @@ class Graph(object):
         self.neighbors_lst[v].append(u)
         self.edge_matrix[u][v] = edge
         self.edge_matrix[v][u] = reverse_edge
+        # increment brand correlation
+        num_edges += 1
+        if v.brand not in self.brand_matrix[u.brand]:
+            self.brand_matrix[u.brand][v.brand] = 1
+            self.brand_matrix[v.brand][u.brand] = 1
+        else:
+            self.brand_matrix[u.brand][v.brand] += 1
+            self.brand_matrix[v.brand][u.brand] += 1
 
     def update_edge(self, u, v, diff):
         edge = self.edge_matrix[u][v]
@@ -109,6 +122,7 @@ class User(object):
         current_user_id += 1
         self.true_size = true_size
         self.name = name
+        self.brand_list = {}
 
     def get_id(self):
         return self.id
@@ -124,6 +138,8 @@ class User(object):
 
     def rate_node(self, node, rating):
         self.node_rating_dict[node] = rating
+        self.brand_list[node.brand] = 1
+
 
 
  

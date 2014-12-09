@@ -41,8 +41,8 @@ def make_purchases(num_purchases):
     	while abs(node.get_size() - user.get_true_size()) > 20:
         	nodeid = random.randint(0,num_items-1)
         	node = nodes_list[nodeid]
-      	rating = (node.get_size() - user.get_true_size() + 50) + random.randrange(-5,5)
-      	events.rate_Event(user, node, rating)
+      rating = (node.get_size() - user.get_true_size() + 50) + random.randrange(-5,5)
+      events.rate_Event(user, node, rating)
 
 
 initialize_users()
