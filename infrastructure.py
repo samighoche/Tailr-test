@@ -59,7 +59,14 @@ class Graph(object):
         if node.brand not in self.brand_matrix:
             self.brand_matrix[node.brand] = {}
         
- 
+    def get_same_nodes(self, v):
+        same_item_nodes = []
+        for node in self.neighbors_lst[v]:
+            if self.edge_matrix[v][node].same_item:
+                same_item_nodes.append(node)
+        return same_item_nodes
+
+
     def get_edges(self, v):
         return self.edge_lst[v]
 

@@ -62,8 +62,10 @@ def astar(user, start):
 					best_rating_so_far = rating + graph.edge_matrix[start][node].mean_of_diffs
 			# print("best_diff_so_far: ", svasdvadvas, " goal's size: ", v.size)
 			if best_diff_so_far[1] == start:
-				return (best_diff_so_far[1], best_rating_so_far, confidence, length_of_path)
-			return (best_diff_so_far[1], best_rating_so_far, confidence*graph.edge_matrix[start][best_diff_so_far[1]].confidence, length_of_path)
+				print((best_diff_so_far[1], best_rating_so_far, confidence, length_of_path, expanded))
+				return (best_diff_so_far[1], best_rating_so_far, confidence, length_of_path, expanded)
+			print((best_diff_so_far[1], best_rating_so_far, confidence*graph.edge_matrix[start][best_diff_so_far[1]].confidence, length_of_path+1, expanded))
+			return (best_diff_so_far[1], best_rating_so_far, confidence*graph.edge_matrix[start][best_diff_so_far[1]].confidence, length_of_path+1, expanded)
 		for neighbor in graph.neighbors_lst[v]:
 			g[neighbor] = g[v] + graph.edge_matrix[v][neighbor].cost
 			if f[neighbor] > g[neighbor] + heuristic(user, neighbor) and neighbor not in same_item_nodes:

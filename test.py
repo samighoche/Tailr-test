@@ -11,8 +11,8 @@ import time
 # num_brands = int(raw_input("Please enter the number of brands for this trial"))
 
 num_users = 40
-num_items = 70
-num_purchases = 600
+num_items = 90
+num_purchases = 800
 num_brands = 5
 nodes_per_item = 2
 
@@ -34,7 +34,7 @@ def initialize_items():
     same_items = []
     for j in range(nodes_per_item):
       # GOTTA FIX THIS HERE
-      size = random.randint(30+j*10, 70)
+      size = random.randint(30+j*10, 70-(nodes_per_item-j)*10)
       global current_item_id
       brand_index = random.randint(0, num_brands-1)
       brand = brands_list[brand_index]
@@ -79,7 +79,8 @@ def make_purchases(num_purchases):
       node = possible_nodes[nodeid]
       rating = (node.get_size() - user.get_true_size() + 50) + random.randrange(-5,5)
       events.rate_event(user, node, rating)
-    i += 1
+      i += 1
+    
 
 
 
@@ -105,13 +106,9 @@ node = nodes_list[nodeid]
 while node in user.node_rating_dict or is_same_as_already_purchased_item(user, node):
   nodeid = random.randint(0, num_items*nodes_per_item-1)
   node = nodes_list[nodeid]
-events.ask_for_prediction_dijkstra(user, node)
-events.ask_for_prediction_astar(user, node)
-
-# for i in list(user.node_rating_dict.keys()):
-#   goal = i
-#   #goal = random.choice(list(user.node_rating_dict.keys()))
-#   events.ask_for_prediction_bidirectional(node, goal, user)
+events.ask_for_prediction("dijkstra", user, node)
+# events.ask_for_prediction("astar", user, node)
+events.ask_for_prediction("bidirectional", user, node)
   
 # for user in users_list:
 # 	count = 0
