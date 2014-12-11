@@ -96,15 +96,22 @@ make_purchases(num_purchases)
 #       print("0"),
 #   print("\n"),
 
+
 userid = random.randint(0, num_users-1)
 user = users_list[userid]
 nodeid = random.randint(0, num_items*nodes_per_item-1)
 node = nodes_list[nodeid]
+
 while node in user.node_rating_dict or is_same_as_already_purchased_item(user, node):
   nodeid = random.randint(0, num_items*nodes_per_item-1)
   node = nodes_list[nodeid]
 events.ask_for_prediction_dijkstra(user, node)
 
+for i in list(user.node_rating_dict.keys()):
+  goal = i
+  #goal = random.choice(list(user.node_rating_dict.keys()))
+  events.ask_for_prediction_bidirectional(node, goal, user)
+  
 # for user in users_list:
 # 	count = 0
 # 	total = 0
