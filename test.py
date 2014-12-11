@@ -10,9 +10,9 @@ import time
 # num_purchases = int(raw_input("Please enter the number of purchases for this trial"))
 # num_brands = int(raw_input("Please enter the number of brands for this trial"))
 
-num_users = 5
-num_items = 20
-num_purchases = 100
+num_users = 20
+num_items = 50
+num_purchases = 400
 num_brands = 2
 nodes_per_item = 1
 
@@ -87,18 +87,25 @@ initialize_brands()
 initialize_users()
 initialize_items()
 make_purchases(num_purchases)
-for node1 in graph.edge_matrix:
-  for node2 in graph.edge_matrix:
-    if node2 in graph.edge_matrix[node1]:
-      print (graph.edge_matrix[node1][node2].num_ratings),
-    else:
-      print("0"),
-  print("\n"),
-# userid = random.randint(0, num_users-1)
-# user = users_list[userid]
-# nodeid = random.randint(0, num_items*nodes_per_item-1)
-# node = nodes_list[nodeid]
-# events.ask_for_prediction_dijkstra(user, node)
+# for node1 in graph.edge_matrix:
+#   for node2 in graph.edge_matrix:
+#     if node2 in graph.edge_matrix[node1]:
+#       print (graph.edge_matrix[node1][node2].num_ratings),
+#     else:
+#       print("0"),
+#   print("\n"),
+
+
+userid = random.randint(0, num_users-1)
+user = users_list[userid]
+nodeid = random.randint(0, num_items*nodes_per_item-1)
+node = nodes_list[nodeid]
+
+for i in list(user.node_rating_dict.keys()):
+  goal = i
+  #goal = random.choice(list(user.node_rating_dict.keys()))
+  events.ask_for_prediction_bidirectional(node, goal, user)
+  
 
 # for user in users_list:
 # 	count = 0

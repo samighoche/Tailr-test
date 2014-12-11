@@ -1,6 +1,7 @@
 import infrastructure
 from global_vars import graph, num_edges
 from dijkstra import dijkstra
+from dijkstra import bidirectionalDijkstra
 # from PS import perimeter_search
 # from LS import beam_search
 
@@ -17,6 +18,12 @@ def ask_for_prediction_perimeter_search(user, node):
 		return user.node_rating_dict[node]
 	else:
 		return perimeter_search(user, node)
+
+
+def ask_for_prediction_bidirectional(start, goal, user):
+	result = bidirectionalDijkstra(start, goal, user)
+	print result
+
 
 def ask_for_prediction_beam_search(user, node):
 	if node in user.node_rating_dict:
