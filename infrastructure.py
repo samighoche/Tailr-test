@@ -1,24 +1,15 @@
 import math
-import global_vars
 
-global num_edges
+
 
 class Node(object):
-    def __init__(self, size, brand=None, name=None):
-        global current_item_id
-        global graph
+    def __init__(self, size, current_item_id, brand):
         self.id = current_item_id
-        current_item_id += 1
         self.size = size
         self.brand = brand
-        self.name = name
-        graph.add_node(self)
 
     def get_id(self):
         return self.id
-
-    def get_name(self):
-        return self.name
 
     def get_size(self):
         return self.size
@@ -31,18 +22,25 @@ class Edge(object):
         self.source = u
         self.end = v  
         self.mean_of_diffs = None
+        self.list_of_diffs = None
         self.stdev = None
         self.num_ratings = None
         self.confidence = None
         self.cost = None
         self.same_item = same_item
+        if same_item:
+            self.confidence = 0.95
+            self.cost = -math.log(self.confidence)
+            self.mean_of_diffs = v.size - u.size
 
     def update_conf(self):
-        raise ValueError("Not implemented yet")
+        self.confidence = max(min(.50*math.sqrt(self.num_ratings), 0.999999) - (self.stdev/3.0)*0.01, 0.01)
+        # self.confidence = max(min(.50*self.num_ratings, 0.999999) - (self.stdev/3.0)*0.01, 0.01)
+        self.cost = -math.log(self.confidence)
 
 
     def __repr__(self):
-        return "%s->%s:\ndiff:%s\nconf:%ssame_item:%s" % (self.source, self.sink, self.mean_of_diffs, self.conf, self.same_item)
+        return "%s->%s:\nmean_of_diffs:%s\nconfidence:%s\nsame_item:%s\nstdev:%s\nnum_ratings:%s\nlist_of_diffs:%s\n" % (self.source, self.end, self.mean_of_diffs, self.confidence, self.same_item, self.stdev, self.num_ratings, self.list_of_diffs)
  
 class Graph(object):
     def __init__(self):
@@ -58,8 +56,7 @@ class Graph(object):
         self.edge_lst[node] = []
         self.neighbors_lst[node] = []
         self.edge_matrix[node] = {}
-        if node.brand not in self.brand_matrix:
-            self.brand_matrix[node.brand] = {}
+        
  
     def get_edges(self, v):
         return self.edge_lst[v]
@@ -71,9 +68,10 @@ class Graph(object):
         return self.edge_matrix
 
     def is_new_edge(self, u, v):
-        return not (edge in self.edge_matrix[u][v])
+        return not (v in self.edge_matrix[u])
  
     def add_edge(self, u, v, same_item = False):
+        # STILL NEED TO CHECK IF SAME ITEM IS TRUE AND PUT AN ARBITRARY DIFF OF RATINGS AND CONFIDENCE AND cost
         if u == v:
             raise ValueError("u == v")
         edge = Edge(u,v, same_item)
@@ -86,23 +84,24 @@ class Graph(object):
         self.neighbors_lst[v].append(u)
         self.edge_matrix[u][v] = edge
         self.edge_matrix[v][u] = reverse_edge
-        # increment brand correlation
-        num_edges += 1
-        if v.brand not in self.brand_matrix[u.brand]:
+        # print(u.brand)
+        if u.brand is not None and v.brand not in self.brand_matrix[u.brand]:
             self.brand_matrix[u.brand][v.brand] = 1
             self.brand_matrix[v.brand][u.brand] = 1
-        else:
+        elif u.brand is not None:
             self.brand_matrix[u.brand][v.brand] += 1
             self.brand_matrix[v.brand][u.brand] += 1
 
     def update_edge(self, u, v, diff):
         edge = self.edge_matrix[u][v]
         num_ratings = edge.num_ratings
-        if self.num_ratings == None:
+        if num_ratings == None:
             edge.mean_of_diffs = diff
             edge.stdev = 0
             edge.num_ratings = 1
-            edge.update_conf()
+            edge.list_of_diffs = [diff]
+            edge.confidence = 0.55
+            edge.cost = -math.log(edge.confidence)
         else:
             mean = edge.mean_of_diffs
             stdev = edge.stdev
@@ -112,14 +111,13 @@ class Graph(object):
             edge.mean_of_diffs = new_mean
             edge.stdev = new_stdev
             edge.num_ratings += 1
+            edge.list_of_diffs.append(diff)
             edge.update_conf()
 
 class User(object):
-    def __init__(self, true_size, name=None):
+    def __init__(self, true_size, current_user_id, name=None):
         self.node_rating_dict = {}
-        global current_user_id
         self.id = current_user_id
-        current_user_id += 1
         self.true_size = true_size
         self.name = name
         self.brand_list = {}
@@ -137,6 +135,7 @@ class User(object):
         return self.node_rating_dict[node]
 
     def rate_node(self, node, rating):
+
         self.node_rating_dict[node] = rating
         self.brand_list[node.brand] = 1
 

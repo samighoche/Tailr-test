@@ -25,3 +25,6 @@ class PriorityQueue:
     if node in self.set:
       return self.set[node][0]
     return None
+
+  def is_empty(self):
+    return not self.heap
