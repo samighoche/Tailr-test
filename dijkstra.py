@@ -191,21 +191,6 @@ def bidirectionalDijkstra(start, goal, user):
 				confidence *= graph.edge_matrix[current][prevStart[current]].confidence
 				length_of_path += 1
 				current = prevStart[current]
-
-			# while current is not start:
-			# 	if current in prevEnd:
-			# 		rating += graph.edge_matrix[current][prevEnd[current]].mean_of_diffs
-			# 		confidence *= graph.edge_matrix[current][prevEnd[current]].confidence
-			# 		length_of_path += 1
-			# 		current = prevEnd[current]
-			# 		print "i got stuck in the end "
-			# 	elif current in prevStart:
-			# 		rating += graph.edge_matrix[current][prevStart[current]].mean_of_diffs
-			# 		confidence *= graph.edge_matrix[current][prevStart[current]].confidence
-			# 		length_of_path += 1
-			# 		current = prevStart[current]
-			# 		print "i got stuck in the beginning"
-			# 	print "i got stuck in no where"
 			
 			best_rating_so_far = (abs(rating - 50), start)
 			

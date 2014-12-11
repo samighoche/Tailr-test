@@ -56,6 +56,8 @@ class Graph(object):
         self.edge_lst[node] = []
         self.neighbors_lst[node] = []
         self.edge_matrix[node] = {}
+        if node.brand not in self.brand_matrix:
+            self.brand_matrix[node.brand] = {}
         
  
     def get_edges(self, v):
@@ -137,7 +139,10 @@ class User(object):
     def rate_node(self, node, rating):
 
         self.node_rating_dict[node] = rating
-        self.brand_list[node.brand] = 1
+        if node.brand not in self.brand_list:
+            self.brand_list[node.brand] = 1
+        else:
+            self.brand_list[node.brand] += 1
 
 
 

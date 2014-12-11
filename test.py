@@ -10,11 +10,11 @@ import time
 # num_purchases = int(raw_input("Please enter the number of purchases for this trial"))
 # num_brands = int(raw_input("Please enter the number of brands for this trial"))
 
-num_users = 20
-num_items = 50
-num_purchases = 400
-num_brands = 2
-nodes_per_item = 1
+num_users = 40
+num_items = 70
+num_purchases = 600
+num_brands = 5
+nodes_per_item = 2
 
 users_list = [None for i in range(num_users)]
 nodes_list = [None for i in range(num_items*nodes_per_item)]
@@ -64,7 +64,7 @@ def make_purchases(num_purchases):
     userid = random.randint(0, num_users-1)
     user = users_list[userid]
     if not user.brand_list:
-      num_brands_user = random.randint(1, num_brands)
+      num_brands_user = random.randint(1, num_brands/4+1)
       brands_list_copy = brands_list[:]
       for j in range(num_brands_user):
         index = random.randint(0, num_brands-j-1)
@@ -106,11 +106,12 @@ while node in user.node_rating_dict or is_same_as_already_purchased_item(user, n
   nodeid = random.randint(0, num_items*nodes_per_item-1)
   node = nodes_list[nodeid]
 events.ask_for_prediction_dijkstra(user, node)
+events.ask_for_prediction_astar(user, node)
 
-for i in list(user.node_rating_dict.keys()):
-  goal = i
-  #goal = random.choice(list(user.node_rating_dict.keys()))
-  events.ask_for_prediction_bidirectional(node, goal, user)
+# for i in list(user.node_rating_dict.keys()):
+#   goal = i
+#   #goal = random.choice(list(user.node_rating_dict.keys()))
+#   events.ask_for_prediction_bidirectional(node, goal, user)
   
 # for user in users_list:
 # 	count = 0

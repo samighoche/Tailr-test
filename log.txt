@@ -1,18 +1,60 @@
-25
-<infrastructure.Node object at 0x1007c3e90>-><infrastructure.Node object at 0x1007cd850>:
+17
+<infrastructure.Node object at 0x1006cc690>-><infrastructure.Node object at 0x1006d0110>:
 mean_of_diffs:1
-confidence:0.703773447853
+confidence:0.987262351217
 same_item:False
-stdev:1.0
-num_ratings:2
-list_of_diffs:[2, 0]
+stdev:3.82099463491
+num_ratings:5
+list_of_diffs:[4, 1, 8, -3, -1]
 
-<infrastructure.Node object at 0x1007cd850>-><infrastructure.Node object at 0x1007cd210>:
-mean_of_diffs:-8
-confidence:0.994471292016
+<infrastructure.Node object at 0x1006d0110>-><infrastructure.Node object at 0x1006d0050>:
+mean_of_diffs:-6
+confidence:0.95
+same_item:True
+stdev:None
+num_ratings:None
+list_of_diffs:None
+
+<infrastructure.Node object at 0x1006d0050>-><infrastructure.Node object at 0x1006d0850>:
+mean_of_diffs:13
+confidence:0.98719709042
 same_item:False
-stdev:1.65831239518
+stdev:3.84057287393
 num_ratings:4
-list_of_diffs:[-7, -7, -8, -5]
+list_of_diffs:[10, 16, 12, 19]
 
-('best_node: ', <infrastructure.Node object at 0x1007cd210>, ' predicted_rating: ', 58, ' confidence: ', 0.6998824899731934, ' length_of_path: ', 2)
+<infrastructure.Node object at 0x1006d0850>-><infrastructure.Node object at 0x1006d0910>:
+mean_of_diffs:-6
+confidence:0.95
+same_item:True
+stdev:None
+num_ratings:None
+list_of_diffs:None
+
+<infrastructure.Node object at 0x1006d0910>-><infrastructure.Node object at 0x1006d2a90>:
+mean_of_diffs:6
+confidence:0.992927932188
+same_item:False
+stdev:2.12132034356
+num_ratings:4
+list_of_diffs:[10, 5, 4, 6]
+
+('best_node: ', <infrastructure.Node object at 0x1006d2a90>, ' predicted_rating: ', 47, ' confidence: ', 0.873376256451645, ' length_of_path: ', 5)
+15
+<infrastructure.Node object at 0x1006cee10>-><infrastructure.Node object at 0x1006d5890>:
+mean_of_diffs:-5
+confidence:0.990110735351
+same_item:False
+stdev:2.96647939484
+num_ratings:5
+list_of_diffs:[-6, -2, -8, -4, -1]
+
+<infrastructure.Node object at 0x1006d5890>-><infrastructure.Node object at 0x1006d2a90>:
+mean_of_diffs:-2
+confidence:0.993332333333
+same_item:False
+stdev:2.0
+num_ratings:4
+list_of_diffs:[1, -2, -1, -5]
+
+('best_node: ', <infrastructure.Node object at 0x1006d2a90>, ' predicted_rating: ', 45, ' confidence: ', 0.9835090070041334, ' length_of_path: ', 2)
