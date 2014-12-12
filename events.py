@@ -44,12 +44,13 @@ def ask_for_prediction(algorithm, user, node, limit=None):
 				max_conf = result[2]
 				best_result = result
 	# pick best result out of all starting sizes
+	print(algorithm)
 	if best_result is None:
 		print("Path does not exist")
 	else:
 		(best_node, predicted_rating, confidence, length_of_path, _) = best_result
 		print("best_node: ", best_node, " predicted_rating: ", predicted_rating, " confidence: ", confidence, " length_of_path: ", length_of_path, " expanded nodes: ", expanded)
-
+	print("")
 
 # update user and graph with user's new rating
 def rate_event(user, node, rating):

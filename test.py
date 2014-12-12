@@ -94,25 +94,29 @@ initialize_items()
 make_purchases(num_purchases)
 
 # dump graph (should only be used for small enough graphs (around 50*50 nodes))
-# for node1 in graph.edge_matrix:
-#   for node2 in graph.edge_matrix:
-#     if node2 in graph.edge_matrix[node1]:
-#       print (graph.edge_matrix[node1][node2].num_ratings),
-#     else:
-#       print("0"),
-#   print("\n"),
+def dump_graph():
+  for node1 in graph.edge_matrix:
+    for node2 in graph.edge_matrix:
+      if node2 in graph.edge_matrix[node1]:
+        print (graph.edge_matrix[node1][node2].num_ratings),
+      else:
+        print("0"),
+    print("\n"),
 
 # pick a random user and a random node of an item that user hasn't purchased (all sizes of it)
 #   and run all algorithms on it (results get printed)
-userid = random.randint(0, num_users-1)
-user = users_list[userid]
-nodeid = random.randint(0, num_items*nodes_per_item-1)
-node = nodes_list[nodeid]
-while node in user.node_rating_dict or is_same_as_already_purchased_item(user, node):
+def ask_for_prediction():
+  userid = random.randint(0, num_users-1)
+  user = users_list[userid]
   nodeid = random.randint(0, num_items*nodes_per_item-1)
   node = nodes_list[nodeid]
-events.ask_for_prediction("dijkstra", user, node)
-events.ask_for_prediction("astar", user, node)
-events.ask_for_prediction("kdirectional", user, node)
-events.ask_for_prediction("perimeter_search", user, node, -math.log(0.3))
-events.ask_for_prediction("beam_search", user, node)
+  while node in user.node_rating_dict or is_same_as_already_purchased_item(user, node):
+    nodeid = random.randint(0, num_items*nodes_per_item-1)
+    node = nodes_list[nodeid]
+  events.ask_for_prediction("dijkstra", user, node)
+  events.ask_for_prediction("astar", user, node)
+  events.ask_for_prediction("kdirectional", user, node)
+  events.ask_for_prediction("perimeter_search", user, node, -math.log(0.3))
+  events.ask_for_prediction("beam_search", user, node)
+
+ask_for_prediction()

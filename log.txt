@@ -1,5 +1,15 @@
-('best_node: ', <infrastructure.Node object at 0x100795d50>, ' predicted_rating: ', 62, ' confidence: ', 0.30955749999999993, ' length_of_path: ', 5, ' expanded nodes: ', 629)
-('best_node: ', <infrastructure.Node object at 0x100795d50>, ' predicted_rating: ', 62, ' confidence: ', 0.2940796249999999, ' length_of_path: ', 6, ' expanded nodes: ', 366)
-('best_node: ', <infrastructure.Node object at 0x100795d50>, ' predicted_rating: ', 65, ' confidence: ', 0.30955749999999993, ' length_of_path: ', 5, ' expanded nodes: ', 300)
-('best_node: ', <infrastructure.Node object at 0x100795d50>, ' predicted_rating: ', 65, ' confidence: ', 0.30955749999999993, ' length_of_path: ', 5, ' expanded nodes: ', 114)
-('best_node: ', <infrastructure.Node object at 0x100795d50>, ' predicted_rating: ', 70, ' confidence: ', 0.022981699111233333, ' length_of_path: ', 11, ' expanded nodes: ', 82)
+dijkstra
+('best_node: ', <infrastructure.Node object at 0x1023e9b10>, ' predicted_rating: ', 41, ' confidence: ', 0.4201137499999999, ' length_of_path: ', 5, ' expanded nodes: ', 1030)
+
+astar
+('best_node: ', <infrastructure.Node object at 0x1023e9b10>, ' predicted_rating: ', 48, ' confidence: ', 0.2940796249999999, ' length_of_path: ', 6, ' expanded nodes: ', 841)
+
+kdirectional
+('best_node: ', <infrastructure.Node object at 0x1023e9b10>, ' predicted_rating: ', 41, ' confidence: ', 0.4201137499999999, ' length_of_path: ', 5, ' expanded nodes: ', 627)
+
+perimeter_search
+('best_node: ', <infrastructure.Node object at 0x1023e9c50>, ' predicted_rating: ', 56, ' confidence: ', 0.3429999999999999, ' length_of_path: ', 3, ' expanded nodes: ', 319)
+
+beam_search
+('best_node: ', <infrastructure.Node object at 0x1023e9c90>, ' predicted_rating: ', 52, ' confidence: ', 0.03833592664999997, ' length_of_path: ', 10, ' expanded nodes: ', 165)
+
