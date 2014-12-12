@@ -4,24 +4,24 @@ import pqueue
 
 global graph
 
-def heuristic(user, node):
-	num_outgoing_edges = len(graph.neighbors_lst[node])
-	num_goal_nodes = len(user.node_rating_dict)
-	total = 0
-	for brand in user.brand_list:
-		if brand in graph.brand_matrix[node.brand]:
-			total += user.brand_list[brand]*graph.brand_matrix[node.brand][brand]
-	correlation_average = total/num_goal_nodes
-	return num_outgoing_edges/80 + 0.3*correlation_average/global_vars.num_edges
-
 # def heuristic(user, node):
 # 	num_outgoing_edges = len(graph.neighbors_lst[node])
 # 	num_goal_nodes = len(user.node_rating_dict)
-# 	brandadd = 0
+# 	total = 0
 # 	for brand in user.brand_list:
-# 		if brand == node.brand:
-# 			brandadd = user.brand_list[brand]*0.01
-# 	return num_outgoing_edges/100 + brandadd
+# 		if brand in graph.brand_matrix[node.brand]:
+# 			total += user.brand_list[brand]*graph.brand_matrix[node.brand][brand]
+# 	correlation_average = total/num_goal_nodes
+# 	return num_outgoing_edges/80 + 0.3*correlation_average/global_vars.num_edges
+
+def heuristic(user, node):
+	num_outgoing_edges = len(graph.neighbors_lst[node])
+	num_goal_nodes = len(user.node_rating_dict)
+	brandadd = 0
+	for brand in user.brand_list:
+		if brand == node.brand:
+			brandadd = user.brand_list[brand]*0.01
+	return num_outgoing_edges/100 + brandadd
 
 
 def astar(user, start):

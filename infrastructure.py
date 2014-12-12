@@ -110,7 +110,7 @@ class Graph(object):
             edge.stdev = 0
             edge.num_ratings = 1
             edge.list_of_diffs = [diff]
-            edge.confidence = 0.55
+            edge.confidence = 0.7
             edge.cost = f(edge.confidence)
         else:
             mean = edge.mean_of_diffs

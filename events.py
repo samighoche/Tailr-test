@@ -5,12 +5,14 @@ from dijkstra import dijkstra
 from dijkstra import bidirectionalDijkstra
 from dijkstra import kdirectionalDijkstra
 from astar import astar
+from perimeter import perimeter_search
+from beamSearch import beam_search
 # from PS import perimeter_search
 # from LS import beam_search
 
 global graph
 
-def ask_for_prediction(algorithm, user, node):
+def ask_for_prediction(algorithm, user, node, limit=None):
 	same_nodes = graph.get_same_nodes(node)
 	same_nodes.append(node)
 	max_conf = None
@@ -26,22 +28,16 @@ def ask_for_prediction(algorithm, user, node):
 			result = astar(user, node)
 			if result is not None:
 				expanded += result[4]
-		elif algorithm == "bidirectional":
-		  	max_conf_for_size = None
-			best_result_for_size = None
-			nodesExpanded = 0
-			for goal in user.node_rating_dict:
-			  result = bidirectionalDijkstra(node, goal, user)
-			  if result is not None:
-			  	nodesExpanded += result[4]
-			  	if best_result_for_size is None or result[2] > max_conf_for_size:
-			  		max_conf_for_size = result[2]
-			  		best_result_for_size = result
-			result = best_result_for_size
-			if result is not None:
-				expanded += nodesExpanded
 		elif algorithm == "kdirectional":
 			result = kdirectionalDijkstra(user, node)
+			if result is not None:
+				expanded += result[4]
+		elif algorithm == "perimeter_search":
+			result = perimeter_search(user, node, limit)
+			if result is not None:
+				expanded += result[4]
+		elif algorithm == "beam_search":
+			result = beam_search(user, node)
 			if result is not None:
 				expanded += result[4]
 		if result is not None:
@@ -54,20 +50,6 @@ def ask_for_prediction(algorithm, user, node):
 		(best_node, predicted_rating, confidence, length_of_path, _) = best_result
 		print("best_node: ", best_node, " predicted_rating: ", predicted_rating, " confidence: ", confidence, " length_of_path: ", length_of_path, " expanded nodes: ", expanded)
 
-
-def ask_for_prediction_perimeter_search(user, node):
-	if node in user.node_rating_dict:
-		return user.node_rating_dict[node]
-	else:
-		return perimeter_search(user, node)
-
-
-
-def ask_for_prediction_beam_search(user, node):
-	if node in user.node_rating_dict:
-		return user.node_rating_dict[node]
-	else:
-		return beam_search(user, node)
 
 
 def rate_event(user, node, rating):

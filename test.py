@@ -3,6 +3,7 @@ import infrastructure
 import random
 import events
 import time
+import math
 
 # Someone please replace these lines with sys args (the program should take these as arguments like in the psets)
 # num_users = int(raw_input("Please enter the number of users for this trial"))
@@ -10,10 +11,10 @@ import time
 # num_purchases = int(raw_input("Please enter the number of purchases for this trial"))
 # num_brands = int(raw_input("Please enter the number of brands for this trial"))
 
-num_users = 300
-num_items = 900
-num_purchases = 2000
-num_brands = 5
+num_users = 400
+num_items = 1100
+num_purchases = 3000
+num_brands = 8
 nodes_per_item = 3
 
 users_list = [None for i in range(num_users)]
@@ -108,8 +109,9 @@ while node in user.node_rating_dict or is_same_as_already_purchased_item(user, n
   node = nodes_list[nodeid]
 events.ask_for_prediction("dijkstra", user, node)
 events.ask_for_prediction("astar", user, node)
-# events.ask_for_prediction("bidirectional", user, node)
 events.ask_for_prediction("kdirectional", user, node)
+events.ask_for_prediction("perimeter_search", user, node, -math.log(0.3))
+events.ask_for_prediction("beam_search", user, node)
   
 # for user in users_list:
 # 	count = 0

@@ -1,3 +1,5 @@
-('best_node: ', <infrastructure.Node object at 0x100792250>, ' predicted_rating: ', 28, ' confidence: ', 0.15805625000000004, ' length_of_path: ', 4, ' expanded nodes: ', 1808)
-('best_node: ', <infrastructure.Node object at 0x100792250>, ' predicted_rating: ', 39, ' confidence: ', 0.15015343750000001, ' length_of_path: ', 5, ' expanded nodes: ', 885)
-('best_node: ', <infrastructure.Node object at 0x100792250>, ' predicted_rating: ', 28, ' confidence: ', 0.15805625, ' length_of_path: ', 4, ' expanded nodes: ', 495)
+('best_node: ', <infrastructure.Node object at 0x100699910>, ' predicted_rating: ', 45, ' confidence: ', 0.3258499999999999, ' length_of_path: ', 4, ' expanded nodes: ', 1375)
+('best_node: ', <infrastructure.Node object at 0x100699910>, ' predicted_rating: ', 50, ' confidence: ', 0.30955749999999993, ' length_of_path: ', 5, ' expanded nodes: ', 2957)
+('best_node: ', <infrastructure.Node object at 0x100699910>, ' predicted_rating: ', 45, ' confidence: ', 0.3258499999999999, ' length_of_path: ', 4, ' expanded nodes: ', 483)
+('best_node: ', <infrastructure.Node object at 0x100699910>, ' predicted_rating: ', 45, ' confidence: ', 0.3258499999999999, ' length_of_path: ', 4, ' expanded nodes: ', 280)
+('best_node: ', <infrastructure.Node object at 0x100699910>, ' predicted_rating: ', 51, ' confidence: ', 0.07823658499999996, ' length_of_path: ', 7, ' expanded nodes: ', 186)
