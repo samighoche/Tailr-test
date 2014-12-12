@@ -3,6 +3,7 @@ import global_vars
 from global_vars import graph
 from dijkstra import dijkstra
 from dijkstra import bidirectionalDijkstra
+from dijkstra import kdirectionalDijkstra
 from astar import astar
 # from PS import perimeter_search
 # from LS import beam_search
@@ -14,21 +15,35 @@ def ask_for_prediction(algorithm, user, node):
 	same_nodes.append(node)
 	max_conf = None
 	best_result = None
+	result = None
+	expanded = 0
 	for node in same_nodes:
 		if algorithm == "dijkstra":
 			result = dijkstra(user, node)
+			if result is not None:
+				expanded += result[4]
 		elif algorithm == "astar":
 			result = astar(user, node)
+			if result is not None:
+				expanded += result[4]
 		elif algorithm == "bidirectional":
 		  	max_conf_for_size = None
 			best_result_for_size = None
+			nodesExpanded = 0
 			for goal in user.node_rating_dict:
 			  result = bidirectionalDijkstra(node, goal, user)
 			  if result is not None:
+			  	nodesExpanded += result[4]
 			  	if best_result_for_size is None or result[2] > max_conf_for_size:
 			  		max_conf_for_size = result[2]
 			  		best_result_for_size = result
 			result = best_result_for_size
+			if result is not None:
+				expanded += nodesExpanded
+		elif algorithm == "kdirectional":
+			result = kdirectionalDijkstra(user, node)
+			if result is not None:
+				expanded += result[4]
 		if result is not None:
 			if best_result is None or result[2] > max_conf:
 				max_conf = result[2]
@@ -36,7 +51,7 @@ def ask_for_prediction(algorithm, user, node):
 	if best_result is None:
 		print("Path does not exist")
 	else:
-		(best_node, predicted_rating, confidence, length_of_path, expanded) = best_result
+		(best_node, predicted_rating, confidence, length_of_path, _) = best_result
 		print("best_node: ", best_node, " predicted_rating: ", predicted_rating, " confidence: ", confidence, " length_of_path: ", length_of_path, " expanded nodes: ", expanded)
 
 

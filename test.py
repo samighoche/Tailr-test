@@ -10,11 +10,11 @@ import time
 # num_purchases = int(raw_input("Please enter the number of purchases for this trial"))
 # num_brands = int(raw_input("Please enter the number of brands for this trial"))
 
-num_users = 40
-num_items = 90
-num_purchases = 800
+num_users = 300
+num_items = 900
+num_purchases = 2000
 num_brands = 5
-nodes_per_item = 2
+nodes_per_item = 3
 
 users_list = [None for i in range(num_users)]
 nodes_list = [None for i in range(num_items*nodes_per_item)]
@@ -107,8 +107,9 @@ while node in user.node_rating_dict or is_same_as_already_purchased_item(user, n
   nodeid = random.randint(0, num_items*nodes_per_item-1)
   node = nodes_list[nodeid]
 events.ask_for_prediction("dijkstra", user, node)
-# events.ask_for_prediction("astar", user, node)
-events.ask_for_prediction("bidirectional", user, node)
+events.ask_for_prediction("astar", user, node)
+# events.ask_for_prediction("bidirectional", user, node)
+events.ask_for_prediction("kdirectional", user, node)
   
 # for user in users_list:
 # 	count = 0

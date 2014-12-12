@@ -1,6 +1,7 @@
 import math
 
-
+def f(confidence):
+    return -math.log(confidence)
 
 class Node(object):
     def __init__(self, size, current_item_id, brand):
@@ -30,13 +31,13 @@ class Edge(object):
         self.same_item = same_item
         if same_item:
             self.confidence = 0.95
-            self.cost = -math.log(self.confidence)
+            self.cost = f(self.confidence)
             self.mean_of_diffs = v.size - u.size
 
     def update_conf(self):
         self.confidence = max(min(.50*math.sqrt(self.num_ratings), 0.999999) - (self.stdev/3.0)*0.01, 0.01)
         # self.confidence = max(min(.50*self.num_ratings, 0.999999) - (self.stdev/3.0)*0.01, 0.01)
-        self.cost = -math.log(self.confidence)
+        self.cost = f(self.confidence)
 
 
     def __repr__(self):
@@ -110,7 +111,7 @@ class Graph(object):
             edge.num_ratings = 1
             edge.list_of_diffs = [diff]
             edge.confidence = 0.55
-            edge.cost = -math.log(edge.confidence)
+            edge.cost = f(edge.confidence)
         else:
             mean = edge.mean_of_diffs
             stdev = edge.stdev

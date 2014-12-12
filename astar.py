@@ -43,13 +43,11 @@ def astar(user, start):
 		v = Q.pop()
 		expanded += 1
 		if v in user.node_rating_dict:
-			print(expanded)
 			rating = user.node_rating_dict[v]
 			current = v
 			confidence = 1
 			length_of_path = 0
 			while current is not start:
-				print(graph.edge_matrix[current][prev[current]])
 				rating += graph.edge_matrix[current][prev[current]].mean_of_diffs
 				confidence *= graph.edge_matrix[current][prev[current]].confidence
 				length_of_path += 1
@@ -60,11 +58,8 @@ def astar(user, start):
 				if abs(rating + graph.edge_matrix[start][node].mean_of_diffs - 50) < best_diff_so_far[0]:
 					best_diff_so_far = (rating + graph.edge_matrix[start][node].mean_of_diffs - 50, node)
 					best_rating_so_far = rating + graph.edge_matrix[start][node].mean_of_diffs
-			# print("best_diff_so_far: ", svasdvadvas, " goal's size: ", v.size)
 			if best_diff_so_far[1] == start:
-				print((best_diff_so_far[1], best_rating_so_far, confidence, length_of_path, expanded))
 				return (best_diff_so_far[1], best_rating_so_far, confidence, length_of_path, expanded)
-			print((best_diff_so_far[1], best_rating_so_far, confidence*graph.edge_matrix[start][best_diff_so_far[1]].confidence, length_of_path+1, expanded))
 			return (best_diff_so_far[1], best_rating_so_far, confidence*graph.edge_matrix[start][best_diff_so_far[1]].confidence, length_of_path+1, expanded)
 		for neighbor in graph.neighbors_lst[v]:
 			g[neighbor] = g[v] + graph.edge_matrix[v][neighbor].cost
