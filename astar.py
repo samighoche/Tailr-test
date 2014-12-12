@@ -4,26 +4,31 @@ import pqueue
 
 global graph
 
-# def heuristic(user, node):
-# 	num_outgoing_edges = len(graph.neighbors_lst[node])
-# 	num_goal_nodes = len(user.node_rating_dict)
-# 	total = 0
-# 	for brand in user.brand_list:
-# 		if brand in graph.brand_matrix[node.brand]:
-# 			total += user.brand_list[brand]*graph.brand_matrix[node.brand][brand]
-# 	correlation_average = total/num_goal_nodes
-# 	return num_outgoing_edges/80 + 0.3*correlation_average/global_vars.num_edges
-
+# heuristic that depends on number of outgoing edges, 
+# and correlation of brands, basically preferring nodes from brands that might lead
+# to a goal's brand
 def heuristic(user, node):
 	num_outgoing_edges = len(graph.neighbors_lst[node])
 	num_goal_nodes = len(user.node_rating_dict)
-	brandadd = 0
+	total = 0
 	for brand in user.brand_list:
-		if brand == node.brand:
-			brandadd = user.brand_list[brand]*0.01
-	return num_outgoing_edges/100 + brandadd
+		if brand in graph.brand_matrix[node.brand]:
+			total += user.brand_list[brand]*graph.brand_matrix[node.brand][brand]
+	correlation_average = total/num_goal_nodes
+	return num_outgoing_edges/80 + 0.3*correlation_average/global_vars.num_edges
 
+# heuristic that depends on number of edges,
+# and correlation of brands, basically preferring nodes from brands that match one of the goals' brand
+# def heuristic(user, node):
+# 	num_outgoing_edges = len(graph.neighbors_lst[node])
+# 	num_goal_nodes = len(user.node_rating_dict)
+# 	brandadd = 0
+# 	for brand in user.brand_list:
+# 		if brand == node.brand:
+# 			brandadd = user.brand_list[brand]*0.01
+# 	return num_outgoing_edges/100 + brandadd
 
+# A-Star search with non admissible heuristic, same as UCS but incorporate heurstic cost into overall cost
 def astar(user, start):
 	g = {}
 	f = {}
@@ -62,8 +67,10 @@ def astar(user, start):
 				return (best_diff_so_far[1], best_rating_so_far, confidence, length_of_path, expanded)
 			return (best_diff_so_far[1], best_rating_so_far, confidence*graph.edge_matrix[start][best_diff_so_far[1]].confidence, length_of_path+1, expanded)
 		for neighbor in graph.neighbors_lst[v]:
+			# update real cost so far
 			g[neighbor] = g[v] + graph.edge_matrix[v][neighbor].cost
 			if f[neighbor] > g[neighbor] + heuristic(user, neighbor) and neighbor not in same_item_nodes:
+				# add heuristic to real cost to get total cost
 				f[neighbor] = g[neighbor] + heuristic(user, neighbor)
 				Q.push(neighbor, f[neighbor])
 				prev[neighbor] = v

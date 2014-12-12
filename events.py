@@ -2,16 +2,14 @@ import infrastructure
 import global_vars
 from global_vars import graph
 from dijkstra import dijkstra
-from dijkstra import bidirectionalDijkstra
 from dijkstra import kdirectionalDijkstra
 from astar import astar
 from perimeter import perimeter_search
 from beamSearch import beam_search
-# from PS import perimeter_search
-# from LS import beam_search
 
 global graph
 
+# runs specified algorithm on user and start node
 def ask_for_prediction(algorithm, user, node, limit=None):
 	same_nodes = graph.get_same_nodes(node)
 	same_nodes.append(node)
@@ -19,6 +17,7 @@ def ask_for_prediction(algorithm, user, node, limit=None):
 	best_result = None
 	result = None
 	expanded = 0
+	# repeat algorithm for every size of start item
 	for node in same_nodes:
 		if algorithm == "dijkstra":
 			result = dijkstra(user, node)
@@ -44,6 +43,7 @@ def ask_for_prediction(algorithm, user, node, limit=None):
 			if best_result is None or result[2] > max_conf:
 				max_conf = result[2]
 				best_result = result
+	# pick best result out of all starting sizes
 	if best_result is None:
 		print("Path does not exist")
 	else:
@@ -51,7 +51,7 @@ def ask_for_prediction(algorithm, user, node, limit=None):
 		print("best_node: ", best_node, " predicted_rating: ", predicted_rating, " confidence: ", confidence, " length_of_path: ", length_of_path, " expanded nodes: ", expanded)
 
 
-
+# update user and graph with user's new rating
 def rate_event(user, node, rating):
 	
 	for previous_purchase in user.node_rating_dict:

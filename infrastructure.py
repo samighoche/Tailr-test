@@ -1,5 +1,6 @@
 import math
 
+# function that computes cost based on confidence
 def f(confidence):
     return -math.log(confidence)
 
@@ -34,9 +35,9 @@ class Edge(object):
             self.cost = f(self.confidence)
             self.mean_of_diffs = v.size - u.size
 
+    # function that updates confidence based on number of ratings and stdev
     def update_conf(self):
         self.confidence = max(min(.50*math.sqrt(self.num_ratings), 0.999999) - (self.stdev/3.0)*0.01, 0.01)
-        # self.confidence = max(min(.50*self.num_ratings, 0.999999) - (self.stdev/3.0)*0.01, 0.01)
         self.cost = f(self.confidence)
 
 
@@ -45,16 +46,17 @@ class Edge(object):
  
 class Graph(object):
     def __init__(self):
-        self.edge_lst = {}
+        # returns list of nodes neighbors
         self.neighbors_lst = {}
+        # returns edge between two nodes
         self.edge_matrix = {}
+        # returns correlation between two brands
         self.brand_matrix = {}
 
     def is_new_item(self, node):
         return not (node in neighbors_lst)
  
     def add_node(self, node):
-        self.edge_lst[node] = []
         self.neighbors_lst[node] = []
         self.edge_matrix[node] = {}
         if node.brand not in self.brand_matrix:
@@ -67,10 +69,6 @@ class Graph(object):
                 same_item_nodes.append(node)
         return same_item_nodes
 
-
-    def get_edges(self, v):
-        return self.edge_lst[v]
-
     def get_neighbors(self, v):
         return self.neighbors_lst[v]
 
@@ -80,21 +78,19 @@ class Graph(object):
     def is_new_edge(self, u, v):
         return not (v in self.edge_matrix[u])
  
+
+    # create new edge and update brand matrix correlation
     def add_edge(self, u, v, same_item = False):
-        # STILL NEED TO CHECK IF SAME ITEM IS TRUE AND PUT AN ARBITRARY DIFF OF RATINGS AND CONFIDENCE AND cost
         if u == v:
             raise ValueError("u == v")
         edge = Edge(u,v, same_item)
         reverse_edge = Edge(v,u, same_item)
         edge.reverse_edge = reverse_edge
         reverse_edge.reverse_edge = edge
-        self.edge_lst[u].append(edge)
-        self.edge_lst[v].append(reverse_edge)
         self.neighbors_lst[u].append(v)
         self.neighbors_lst[v].append(u)
         self.edge_matrix[u][v] = edge
         self.edge_matrix[v][u] = reverse_edge
-        # print(u.brand)
         if u.brand is not None and v.brand not in self.brand_matrix[u.brand]:
             self.brand_matrix[u.brand][v.brand] = 1
             self.brand_matrix[v.brand][u.brand] = 1
@@ -102,6 +98,7 @@ class Graph(object):
             self.brand_matrix[u.brand][v.brand] += 1
             self.brand_matrix[v.brand][u.brand] += 1
 
+    # update existing edge with new difference of ratings
     def update_edge(self, u, v, diff):
         edge = self.edge_matrix[u][v]
         num_ratings = edge.num_ratings
@@ -126,10 +123,12 @@ class Graph(object):
 
 class User(object):
     def __init__(self, true_size, current_user_id, name=None):
+        # mapping of node to user's rating of it
         self.node_rating_dict = {}
         self.id = current_user_id
         self.true_size = true_size
         self.name = name
+        # list of brands the user has purchased items belonging to
         self.brand_list = {}
 
     def get_id(self):
