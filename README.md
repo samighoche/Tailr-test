@@ -1,7 +1,7 @@
 Tailr Test  
 ===================  
-Sami Ghoche
-Andrew Malek  
+Sami Ghoche  
+Andrew Malek 
 Devvret Rishi  
 ===================  
 
