@@ -1,8 +1,10 @@
 Tailr Test  
-===================  
+===================
+
 Sami Ghoche  
-Andrew Malek 
-Devvret Rishi  
+Andrew Malek  
+Devvret Rishi 
+
 ===================  
 
 Tailr is a recommender system for online clothing size purchases.  
